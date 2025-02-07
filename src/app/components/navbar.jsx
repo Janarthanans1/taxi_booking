@@ -1,51 +1,50 @@
 "use client"
-import React from 'react'
+import React, { use } from 'react'
 import Link from 'next/link'
+import { IoIosMenu } from 'react-icons/io'
 import { useState } from 'react'
-import { CircleUserRound } from 'lucide-react'
 
 const Navbar = () => {
-    const [profile,setProfile] = useState(false)
+    const [isMenuOpen,setIsMenuOpen] = useState(false)
+    const toggleMenu = () =>{
+        setIsMenuOpen(!isMenuOpen)
+    }
+    console.log(isMenuOpen)
   return (
-    <nav className='fixed bg-white/30 backdrop-blur-none shadow-xl py-5 px-14 flex gap-40 items-center rounded-2xl'>
-        <div>
-            <h1 className='font-extrabold text-xl'>KODAI GANESH CALL TAXI</h1>
-        </div>
-        {/* routes */}
-        <div>
-            <ul className='flex justify-center items-center gap-10 font-bold'>
-                <li className=''>
-                    <Link href="/">Home</Link>
-                </li>
-                <li>
-                    <Link href="/pages/booking">Services & Booking</Link>
-                </li>
-                <li>
-                    <Link href="">Contact Us</Link>
-                </li>
-                <li>
-                    <Link href="">About</Link>
-                </li>
+    <nav className='w-full bg-white/40 fixed p-4'>
+        <div className="flex items-center justify-between">
+            {/* logo */}
+            <div className="text-white text-2xl font-bold">LOGO</div>
+            
+            {/* list menu */}
+            <ul className='hidden md:flex space-x-4'>
+                <li className='text-white'><Link href="/">Home</Link></li>
+                <li className='text-white'><Link href="/pages/booking">Services & Booking</Link></li>
+                <li className='text-white'><Link href="/pages/contactus">Contact Us</Link></li>
+                <li className='text-white'><Link href="/pages/about">About</Link></li>
             </ul>
-        </div>
-        {/*button*/}
-        <div>
-            {profile?
-            <Link href="/pages/profile">
-                <CircleUserRound className='w-9 h-9'/>
-            </Link>:
-            <div id="btns" className='flex items-center justify-center gap-5'>
-                <div className='bg-black text-gray-300 w-fit py-2 px-8 rounded-lg font-bold ' id="btn">
-                <Link href="/pages/signip">Sign In</Link>
-                </div>
-                <div className='bg-black text-gray-300 w-fit py-2 px-8 rounded-lg font-bold ' id="btn">
-                <Link href="/pages/signup">Sign Up</Link>
-                </div>
-            </div>
-                        
-            }
-        </div>
+            <div className='flex items-center gap-5'>
+                {/*Sign In*/}
+                <button className='text-black bg-white px-6 py-2 rounded-lg'>
+                    <Link href='/pages/signin'>Sign In</Link>
+                </button>
 
+                {/*toggle button*/}
+                <button onClick={toggleMenu} className="md:hidden text-white text-4xl focus:outline  focus:outline-gray-400 rounded-md">
+                    <IoIosMenu/>
+                </button>
+            </div>
+            
+        </div>
+        {/*moblie menu*/}
+        {isMenuOpen?(
+                <ul className='flex-col md:hidden'>
+                <li className='text-white py-2'><Link href="/">Home</Link></li>
+                <li className='text-white py-2'><Link href="/pages/booking">Services & Booking</Link></li>
+                <li className='text-white py-2'><Link href="/pages/contactus">Contact Us</Link></li>
+                <li className='text-white py-2'><Link href="/pages/about">About</Link></li>
+            </ul>
+            ):null}
     </nav>
   )
 }
